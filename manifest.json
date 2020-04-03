@@ -2,7 +2,7 @@
  "manifest_version": 2,
  "name": "Google Meet Mute Toggler",
  "description": "For muting and unmuting Google Meet from the extension icon.",
- "version": "1",
+ "version": "0.1",
  "author": "Jason Ketola",
  "icons": {
  	"16": "M_gray16.png",

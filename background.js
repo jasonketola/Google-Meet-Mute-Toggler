@@ -60,7 +60,7 @@ function assessTabs (tab) {
 
   	// If xxx-xxxx-xxx meets are all closed, stop the alarm
   	if (count == 0) {
-  		chrome.alarms.clear(alarmName);
+  		chrome.alarms.clear("3sec");
   	}
 
   	// If only one meet is open reset alert
@@ -73,7 +73,7 @@ function assessTabs (tab) {
   	tabs.forEach( function (item, index) {
   		if (alerts == 0) {
 	  		if (count > 1) {
-	  			alert('Too many Google Meets open. Only one should be open.');
+	  			alert('You have ' + count + ' Google Meets open. Close all but one.');
 	  			alerts = 1;
 	  			chrome.browserAction.setBadgeText({text: 'Err'});
 	  		} else {
@@ -104,7 +104,7 @@ function sendKeypress (tab) {
 // Research meet is active and mute status
 function researchTab (tab) {
   chrome.tabs.query({url: "https://meet.google.com/*"}, function(tabs) {
-  	if ( count > 0 ) {
+  	if ( count == 1 ) {
 	    chrome.tabs.executeScript(tabs[x].id, {
 			file: 'researchTab.js'
 		}, updateIcon);
