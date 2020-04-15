@@ -146,4 +146,10 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
 assessTabs();
 researchTab();
 
+// Reset icon and badge on onload
+chrome.runtime.onSuspend.addListener(function() {
+  chrome.browserAction.setIcon({path:"M_gray128.png"});
+  chrome.browserAction.setBadgeText({text: ''});
+})
+
 
