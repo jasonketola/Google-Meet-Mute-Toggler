@@ -53,8 +53,8 @@ function assessTabs (tab) {
   	// If xxx-xxxx-xxx meets are open set alarm, so that they can be monitored
   	if (count > 0) {
   		chrome.alarms.create("3sec", {
-  			delayInMinutes: 0.05,
-  			periodInMinutes: 0.05
+  		delayInMinutes: 0.05,
+  		periodInMinutes: 0.05
 		});
   	}
 
