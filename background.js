@@ -53,14 +53,16 @@ function assessTabs (tab) {
   	// If xxx-xxxx-xxx meets are open set alarm, so that they can be monitored
   	if (count > 0) {
   		chrome.alarms.create("3sec", {
-  			delayInMinutes: 0.05,
-  			periodInMinutes: 0.05
+  		delayInMinutes: 0.05,
+  		periodInMinutes: 0.05
 		});
   	}
 
-  	// If xxx-xxxx-xxx meets are all closed, stop the alarm
+  	// If xxx-xxxx-xxx meets are all closed, stop the alarm and reset icon and badge
   	if (count == 0) {
   		chrome.alarms.clear("3sec");
+      chrome.browserAction.setIcon({path:"M_gray128.png"});
+      chrome.browserAction.setBadgeText({text: ''});
   	}
 
   	// If only one meet is open reset alert
@@ -146,7 +148,7 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
 assessTabs();
 researchTab();
 
-// Reset icon and badge on onload
+// Reset icon and badge on onload / cleanup in case of crash
 chrome.runtime.onSuspend.addListener(function() {
   chrome.browserAction.setIcon({path:"M_gray128.png"});
   chrome.browserAction.setBadgeText({text: ''});
