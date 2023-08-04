@@ -143,3 +143,12 @@ addEventListener('beforeunload', () => {
   chrome.action.setIcon({ path: "../icons/M_gray128.png" });
   chrome.action.setBadgeText({ text: '' });
 })
+
+// ショートカットキー入力時の処理
+chrome.commands.onCommand.addListener((command) => {
+  if (command === 'toggle-mute') {
+    assessTabs();
+    sendKeypress();
+    researchTab();
+  }
+})

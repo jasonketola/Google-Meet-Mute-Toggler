@@ -22,11 +22,11 @@
  "permissions": ["tabs", "alarms", "scripting"],
  "host_permissions": ["https://meet.google.com/"],
  "commands": {
-  "_execute_action": {
+  "toggle-mute": {
       "suggested_key": {
-        "default": "Ctrl+Shift+A",
-        "mac": "Command+Shift+A"
+        "default": "Ctrl+Shift+A"
       },
+      "description": "Toggle Mute",
       "global": true
     }
   }
