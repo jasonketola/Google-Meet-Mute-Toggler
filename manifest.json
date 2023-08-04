@@ -20,5 +20,13 @@
     "default_icon": "icons/M_gray128.png"
   },
 
- "permissions": ["tabs","https://meet.google.com/", "alarms"]
+ "permissions": ["tabs","https://meet.google.com/", "alarms"],
+ "commands": {
+  "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+A"
+      },
+      "global": true
+    }
+  }
 }
