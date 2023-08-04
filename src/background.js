@@ -49,15 +49,15 @@ function assessTabs(tab) {
 
     // If xxx-xxxx-xxx meets are open set alarm, so that they can be monitored
     if (count > 0) {
-      chrome.alarms.create("3sec", {
-        delayInMinutes: 0.05,
-        periodInMinutes: 0.05
+      chrome.alarms.create("1min", {
+        delayInMinutes: 1,
+        periodInMinutes: 1
       });
     }
 
     // If xxx-xxxx-xxx meets are all closed, stop the alarm and reset icon and badge
     if (count == 0) {
-      chrome.alarms.clear("3sec");
+      chrome.alarms.clear("1min");
       chrome.browserAction.setIcon({ path: "../icons/M_gray128.png" });
       chrome.browserAction.setBadgeText({ text: '' });
     }
@@ -123,7 +123,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
 // Run functions when alarm goes off
 chrome.alarms.onAlarm.addListener(function (alarm) {
-  if (alarm.name === "3sec") {
+  if (alarm.name === "1min") {
     assessTabs();
     researchTab();
   }
