@@ -89,7 +89,7 @@ function sendKeypress(tab) {
   chrome.tabs.query({ url: "https://meet.google.com/*" }, function (tabs) {
     if (x != -1) {
       chrome.tabs.executeScript(tabs[x].id, {
-        file: 'sendKeypress.js'
+        file: 'src/sendKeypress.js'
       });
     }
   });
@@ -100,7 +100,7 @@ function researchTab(tab) {
   chrome.tabs.query({ url: "https://meet.google.com/*" }, function (tabs) {
     if (count == 1) {
       chrome.tabs.executeScript(tabs[x].id, {
-        file: 'researchTab.js'
+        file: 'src/researchTab.js'
       }, updateIcon);
     };
   });
