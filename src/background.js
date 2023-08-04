@@ -5,13 +5,13 @@ function updateIcon(statuses) {
 
   if (!joined_status) {
     // Set icon to gray if not in an active Meet
-    chrome.browserAction.setIcon({ path: "../icons/M_gray128.png" });
+    chrome.action.setIcon({ path: "../icons/M_gray128.png" });
   } else if (muted) {
     // Set icon to red if in an active Meet and muted
-    chrome.browserAction.setIcon({ path: "../icons/M_red128.png" });
+    chrome.action.setIcon({ path: "../icons/M_red128.png" });
   } else {
     // Otherwise set icon to green, meaning unmuted in an active meet
-    chrome.browserAction.setIcon({ path: "../icons/M_green128.png" });
+    chrome.action.setIcon({ path: "../icons/M_green128.png" });
   }
 }
 
@@ -58,14 +58,14 @@ function assessTabs(tab) {
     // If xxx-xxxx-xxx meets are all closed, stop the alarm and reset icon and badge
     if (count == 0) {
       chrome.alarms.clear("1min");
-      chrome.browserAction.setIcon({ path: "../icons/M_gray128.png" });
-      chrome.browserAction.setBadgeText({ text: '' });
+      chrome.action.setIcon({ path: "../icons/M_gray128.png" });
+      chrome.action.setBadgeText({ text: '' });
     }
 
     // If only one meet is open reset alert
     if (count == 1) {
       alerts = 0;
-      chrome.browserAction.setBadgeText({ text: '' });
+      chrome.action.setBadgeText({ text: '' });
     }
 
     // If an alert hasn't been triggered and if more than one xxx-xxxx-xxx meet is open, alert to close some
@@ -74,7 +74,7 @@ function assessTabs(tab) {
         if (count > 1) {
           alert('You have ' + count + ' Google Meets open. Close all but one.');
           alerts = 1;
-          chrome.browserAction.setBadgeText({ text: 'Err' });
+          chrome.action.setBadgeText({ text: 'Err' });
         } else {
           // If only one meet is open and no alerts have been triggered, set x with the id of the tab to interact with
           x = index;
@@ -88,8 +88,9 @@ function assessTabs(tab) {
 function sendKeypress(tab) {
   chrome.tabs.query({ url: "https://meet.google.com/*" }, function (tabs) {
     if (x != -1) {
-      chrome.tabs.executeScript(tabs[x].id, {
-        file: 'src/sendKeypress.js'
+      chrome.scripting.executeScript({
+        target: { tabId: tabs[x].id },
+        files: ['src/sendKeypress.js']
       });
     }
   });
@@ -99,20 +100,19 @@ function sendKeypress(tab) {
 function researchTab(tab) {
   chrome.tabs.query({ url: "https://meet.google.com/*" }, function (tabs) {
     if (count == 1) {
-      chrome.tabs.executeScript(
-        tabs[x].id,
-        {
-        file: 'src/researchTab.js'
-        },
+      chrome.scripting.executeScript({
+        target: { tabId: tabs[x].id },
+        files: ['src/researchTab.js'],
+        // func: updateIcon
         // FIXME: アイコン切り替え処理でエラーが発生するため一旦コメントアウト
         // updateIcon
-      );
+      });
     };
   });
 };
 
 // Functions to run when icon is clicked.
-chrome.browserAction.onClicked.addListener(function (tab) {
+chrome.action.onClicked.addListener(function (tab) {
   assessTabs();
   sendKeypress();
   researchTab();
@@ -139,7 +139,7 @@ assessTabs();
 researchTab();
 
 // Reset icon and badge on onload / cleanup in case of crash
-chrome.runtime.onSuspend.addListener(function () {
-  chrome.browserAction.setIcon({ path: "../icons/M_gray128.png" });
-  chrome.browserAction.setBadgeText({ text: '' });
+addEventListener('beforeunload', () => {
+  chrome.action.setIcon({ path: "../icons/M_gray128.png" });
+  chrome.action.setBadgeText({ text: '' });
 })

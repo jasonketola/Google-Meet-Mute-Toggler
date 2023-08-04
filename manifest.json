@@ -1,5 +1,5 @@
 {
- "manifest_version": 2,
+ "manifest_version": 3,
  "name": "Google Meet Mute Toggler",
  "description": "For muting and unmuting Google Meet from the extension icon.",
  "version": "0.3",
@@ -11,18 +11,18 @@
  	},
 
  "background": {
-  "scripts": ["src/background.js"],
-  "persistent": false
+  "service_worker": "src/background.js",
+  "type": "module"
  },
 
-  "browser_action": {
+  "action": {
     "default_title": "Toggle",
     "default_icon": "icons/M_gray128.png"
   },
-
- "permissions": ["tabs","https://meet.google.com/", "alarms"],
+ "permissions": ["tabs", "alarms", "scripting"],
+ "host_permissions": ["https://meet.google.com/"],
  "commands": {
-  "_execute_browser_action": {
+  "_execute_action": {
       "suggested_key": {
         "default": "Ctrl+Shift+A"
       },
