@@ -5,9 +5,9 @@
  "version": "0.3",
  "author": "Jason Ketola",
  "icons": {
- 	"16": "M_gray16.png",
- 	"48": "M_gray48.png",
- 	"128": "M_gray128.png"
+ 	"16": "icons/M_gray16.png",
+ 	"48": "icons/M_gray48.png",
+ 	"128": "icons/M_gray128.png"
  	},
 
  "background": {
@@ -17,7 +17,7 @@
 
   "browser_action": {
     "default_title": "Toggle",
-    "default_icon": "M_gray128.png"
+    "default_icon": "icons/M_gray128.png"
   },
 
  "permissions": ["tabs","https://meet.google.com/", "alarms"]

@@ -5,13 +5,13 @@ function updateIcon(statuses) {
 
   if (!joined_status) {
     // Set icon to gray if not in an active Meet
-    chrome.browserAction.setIcon({ path: "M_gray128.png" });
+    chrome.browserAction.setIcon({ path: "../icons/M_gray128.png" });
   } else if (muted) {
     // Set icon to red if in an active Meet and muted
-    chrome.browserAction.setIcon({ path: "M_red128.png" });
+    chrome.browserAction.setIcon({ path: "../icons/M_red128.png" });
   } else {
     // Otherwise set icon to green, meaning unmuted in an active meet
-    chrome.browserAction.setIcon({ path: "M_green128.png" });
+    chrome.browserAction.setIcon({ path: "../icons/M_green128.png" });
   }
 }
 
@@ -58,7 +58,7 @@ function assessTabs(tab) {
     // If xxx-xxxx-xxx meets are all closed, stop the alarm and reset icon and badge
     if (count == 0) {
       chrome.alarms.clear("3sec");
-      chrome.browserAction.setIcon({ path: "M_gray128.png" });
+      chrome.browserAction.setIcon({ path: "../icons/M_gray128.png" });
       chrome.browserAction.setBadgeText({ text: '' });
     }
 
@@ -135,6 +135,6 @@ researchTab();
 
 // Reset icon and badge on onload / cleanup in case of crash
 chrome.runtime.onSuspend.addListener(function () {
-  chrome.browserAction.setIcon({ path: "M_gray128.png" });
+  chrome.browserAction.setIcon({ path: "../icons/M_gray128.png" });
   chrome.browserAction.setBadgeText({ text: '' });
 })
