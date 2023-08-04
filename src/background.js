@@ -99,9 +99,14 @@ function sendKeypress(tab) {
 function researchTab(tab) {
   chrome.tabs.query({ url: "https://meet.google.com/*" }, function (tabs) {
     if (count == 1) {
-      chrome.tabs.executeScript(tabs[x].id, {
+      chrome.tabs.executeScript(
+        tabs[x].id,
+        {
         file: 'src/researchTab.js'
-      }, updateIcon);
+        },
+        // FIXME: アイコン切り替え処理でエラーが発生するため一旦コメントアウト
+        // updateIcon
+      );
     };
   });
 };
