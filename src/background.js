@@ -1,3 +1,8 @@
+const ICON_GRAY48 = chrome.runtime.getURL('icons/M_gray48.png')
+const ICON_GRAY128 = chrome.runtime.getURL('icons/M_gray128.png')
+const ICON_RED128 = chrome.runtime.getURL('icons/M_red128.png')
+const ICON_GREEN128 = chrome.runtime.getURL('icons/M_green128.png')
+
 // Sets the icon color appropriately
 function updateIcon(statuses) {
   var joined_status = statuses[0][0];
@@ -5,13 +10,13 @@ function updateIcon(statuses) {
 
   if (!joined_status) {
     // Set icon to gray if not in an active Meet
-    chrome.action.setIcon({ path: "../icons/M_gray128.png" });
+    chrome.action.setIcon({ path: ICON_GRAY128 });
   } else if (muted) {
     // Set icon to red if in an active Meet and muted
-    chrome.action.setIcon({ path: "../icons/M_red128.png" });
+    chrome.action.setIcon({ path: ICON_RED128 });
   } else {
     // Otherwise set icon to green, meaning unmuted in an active meet
-    chrome.action.setIcon({ path: "../icons/M_green128.png" });
+    chrome.action.setIcon({ path: ICON_GREEN128 });
   }
 }
 
@@ -58,7 +63,7 @@ function assessTabs(tab) {
     // If xxx-xxxx-xxx meets are all closed, stop the alarm and reset icon and badge
     if (count == 0) {
       chrome.alarms.clear("1min");
-      chrome.action.setIcon({ path: "../icons/M_gray128.png" });
+      chrome.action.setIcon({ path: ICON_GRAY128 });
       chrome.action.setBadgeText({ text: '' });
     }
 
@@ -78,7 +83,7 @@ function assessTabs(tab) {
               type: 'basic',
               title: '',
               message: `You have ${count} Google Meets open. Close all but one.`,
-              iconUrl: chrome.runtime.getURL('icons/M_gray48.png'),
+              iconUrl: ICON_GRAY128,
             },
           )
           alerts = 1;
@@ -148,7 +153,7 @@ researchTab();
 
 // Reset icon and badge on onload / cleanup in case of crash
 addEventListener('beforeunload', () => {
-  chrome.action.setIcon({ path: "../icons/M_gray128.png" });
+  chrome.action.setIcon({ path: ICON_GRAY128 });
   chrome.action.setBadgeText({ text: '' });
 })
 
