@@ -72,7 +72,15 @@ function assessTabs(tab) {
     tabs.forEach(function (item, index) {
       if (alerts == 0) {
         if (count > 1) {
-          alert('You have ' + count + ' Google Meets open. Close all but one.');
+          chrome.notifications.create(
+            '',
+            {
+              type: 'basic',
+              title: '',
+              message: `You have ${count} Google Meets open. Close all but one.`,
+              iconUrl: chrome.runtime.getURL('icons/M_gray48.png'),
+            },
+          )
           alerts = 1;
           chrome.action.setBadgeText({ text: 'Err' });
         } else {
