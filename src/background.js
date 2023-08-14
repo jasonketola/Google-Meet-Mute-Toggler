@@ -30,7 +30,7 @@ var count = 0; // Number of meet.google.com/xxx-xxxx-xxx windows open
 
 // Checks which tabs are open, which should be interacted with, and alerts if too many meets are open
 function assessTabs(tab) {
-  chrome.tabs.query({ url: "https://meet.google.com/*" }, function (tabs) {
+  chrome.tabs.query({ url: 'https://meet.google.com/*' }, function (tabs) {
 
     // Reset global variable values
     base = 0;
@@ -54,7 +54,7 @@ function assessTabs(tab) {
 
     // If xxx-xxxx-xxx meets are open set alarm, so that they can be monitored
     if (count > 0) {
-      chrome.alarms.create("1min", {
+      chrome.alarms.create('1min', {
         delayInMinutes: 1,
         periodInMinutes: 1
       });
@@ -62,7 +62,7 @@ function assessTabs(tab) {
 
     // If xxx-xxxx-xxx meets are all closed, stop the alarm and reset icon and badge
     if (count == 0) {
-      chrome.alarms.clear("1min");
+      chrome.alarms.clear('1min');
       chrome.action.setIcon({ path: ICON_GRAY128 });
       chrome.action.setBadgeText({ text: '' });
     }
@@ -99,7 +99,7 @@ function assessTabs(tab) {
 
 // Inject keypress for toggling mute into appropriate tab
 function sendKeypress(tab) {
-  chrome.tabs.query({ url: "https://meet.google.com/*" }, function (tabs) {
+  chrome.tabs.query({ url: 'https://meet.google.com/*' }, function (tabs) {
     if (x != -1) {
       chrome.scripting.executeScript({
         target: { tabId: tabs[x].id },
@@ -111,7 +111,7 @@ function sendKeypress(tab) {
 
 // Research meet is active and mute status
 function researchTab(tab) {
-  chrome.tabs.query({ url: "https://meet.google.com/*" }, function (tabs) {
+  chrome.tabs.query({ url: 'https://meet.google.com/*' }, function (tabs) {
     if (count == 1) {
       chrome.scripting.executeScript({
         target: { tabId: tabs[x].id },
@@ -141,7 +141,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
 // Run functions when alarm goes off
 chrome.alarms.onAlarm.addListener(function (alarm) {
-  if (alarm.name === "1min") {
+  if (alarm.name === '1min') {
     assessTabs();
     researchTab();
   }

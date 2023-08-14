@@ -1,6 +1,6 @@
 var muted = false;
 var joined_status = true;
-var divs = document.getElementsByTagName("*");
+var divs = document.getElementsByTagName('*');
 
 // Check if not yet joined
 
