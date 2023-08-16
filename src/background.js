@@ -113,16 +113,29 @@ function sendKeypress(tab) {
 function researchTab(tab) {
   chrome.tabs.query({ url: 'https://meet.google.com/*' }, function (tabs) {
     if (count == 1) {
-      chrome.scripting.executeScript({
-        target: { tabId: tabs[x].id },
-        files: ['src/researchTab.js'],
-        // func: updateIcon
-        // FIXME: アイコン切り替え処理でエラーが発生するため一旦コメントアウト
-        // updateIcon
-      });
+      chrome.scripting.executeScript(
+        {
+          target: { tabId: tabs[x].id },
+          func: checkMute,
+        },
+        updateIcon,
+      );
     };
   });
 };
+
+function checkMute() {
+  let muted = false
+  let joined_status = true
+  for (let elem of document.getElementsByTagName('*')) {
+    if ((elem.innerHTML.indexOf('Join now') != -1) || (elem.innerHTML.indexOf('Rejoin') != -1)) {
+      joined_status = false
+    } else if (elem.matches('[aria-label~="microphone"]')) {
+      muted = JSON.parse(elem.dataset?.isMuted)
+    }
+  }
+  return [muted, joined_status]
+}
 
 // Functions to run when icon is clicked.
 chrome.action.onClicked.addListener(function (tab) {
