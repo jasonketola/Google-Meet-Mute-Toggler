@@ -5,19 +5,14 @@ const ICON_GREEN128 = chrome.runtime.getURL('icons/M_green128.png')
 
 // Sets the icon color appropriately
 function updateIcon(statuses) {
-  var joined_status = statuses[0][0];
-  var muted = statuses[0][1];
+  const muted = statuses[0].result[0]
+  const joined_status = statuses[0].result[1]
 
-  if (!joined_status) {
-    // Set icon to gray if not in an active Meet
-    chrome.action.setIcon({ path: ICON_GRAY128 });
-  } else if (muted) {
-    // Set icon to red if in an active Meet and muted
-    chrome.action.setIcon({ path: ICON_RED128 });
-  } else {
-    // Otherwise set icon to green, meaning unmuted in an active meet
-    chrome.action.setIcon({ path: ICON_GREEN128 });
-  }
+  // Set icon to gray if not in an active Meet
+  // Set icon to red if in an active Meet and muted
+  // Otherwise set icon to green, meaning unmuted in an active meet
+  const icon = (!joined_status) ? ICON_GRAY128 : (muted) ? ICON_GREEN128 : ICON_RED128
+  chrome.action.setIcon({ path: icon})
 }
 
 // Global variables. Bad practice I know. Some of these should be booleans.
