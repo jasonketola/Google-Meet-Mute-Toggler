@@ -12,112 +12,109 @@ function updateIcon(statuses) {
   // Set icon to red if in an active Meet and muted
   // Otherwise set icon to green, meaning unmuted in an active meet
   const icon = (!joined_status) ? ICON_GRAY128 : (muted) ? ICON_GREEN128 : ICON_RED128
-  chrome.action.setIcon({ path: icon})
+  chrome.action.setIcon({ path: icon })
 }
 
-// Global variables. Bad practice I know. Some of these should be booleans.
+// Global variables. Bad practice I know.
 
-var x = -1; // Keeps track of id of which tab to interact with
-var only_base = 0; // If only meet.google.com is open (doesn't include meet.google.com/xxx-xxxx-xxx)
-var base = 0; // If meet.google.com is open
-var alerts = 0; // If an alert has been triggered related to having too many meet windows open
-var count = 0; // Number of meet.google.com/xxx-xxxx-xxx windows open
+let meetTabId = -1 // Keeps track of id of which tab to interact with
+let onlyTab = false // If only meet.google.com is open (doesn't include meet.google.com/xxx-xxxx-xxx)
+let isOpen = false // If meet.google.com is open
+let alerts = false // If an alert has been triggered related to having too many meet windows open
+let meetCount = 0 // Number of meet.google.com/xxx-xxxx-xxx windows open
 
 // Checks which tabs are open, which should be interacted with, and alerts if too many meets are open
 function assessTabs(tab) {
   chrome.tabs.query({ url: 'https://meet.google.com/*' }, function (tabs) {
 
     // Reset global variable values
-    base = 0;
-    only_base = 0;
-    x = -1;
-    count = 0;
+    isOpen = false
+    meetTabId = -1
+    meetCount = 0
 
     // Checks if meet.google.com is open and how many xxx-xxxx-xxx meets
     tabs.forEach(function (item, index) {
       if (item.url == 'https://meet.google.com/') {
-        base = 1;
+        isOpen = true
       } else {
-        count++;
-      };
-    });
+        meetCount++
+      }
+    })
 
     // Checks if only meet.google.com is open
-    if ((base == 1) && (count == 0)) {
-      only_base = 1;
-    };
+    onlyTab = isOpen && meetCount == 0
 
     // If xxx-xxxx-xxx meets are open set alarm, so that they can be monitored
-    if (count > 0) {
+    if (meetCount > 0) {
       chrome.alarms.create('1min', {
         delayInMinutes: 1,
-        periodInMinutes: 1
-      });
+        periodInMinutes: 1,
+      })
     }
 
     // If xxx-xxxx-xxx meets are all closed, stop the alarm and reset icon and badge
-    if (count == 0) {
-      chrome.alarms.clear('1min');
-      chrome.action.setIcon({ path: ICON_GRAY128 });
-      chrome.action.setBadgeText({ text: '' });
+    if (meetCount == 0) {
+      chrome.alarms.clear('1min')
+      chrome.action.setIcon({ path: ICON_GRAY128 })
+      chrome.action.setBadgeText({ text: '' })
     }
 
     // If only one meet is open reset alert
-    if (count == 1) {
-      alerts = 0;
-      chrome.action.setBadgeText({ text: '' });
+    if (meetCount == 1) {
+      alerts = false
+      chrome.action.setBadgeText({ text: '' })
     }
 
     // If an alert hasn't been triggered and if more than one xxx-xxxx-xxx meet is open, alert to close some
     tabs.forEach(function (item, index) {
-      if (alerts == 0) {
-        if (count > 1) {
+      if (!alerts) {
+        if (meetCount > 1) {
           chrome.notifications.create(
             '',
             {
               type: 'basic',
               title: '',
-              message: `You have ${count} Google Meets open. Close all but one.`,
+              message: `You have ${meetCount} Google Meets open. Close all but one.`,
               iconUrl: ICON_GRAY128,
             },
           )
-          alerts = 1;
-          chrome.action.setBadgeText({ text: 'Err' });
+          alerts = true
+          chrome.action.setBadgeText({ text: 'Err' })
         } else {
           // If only one meet is open and no alerts have been triggered, set x with the id of the tab to interact with
-          x = index;
+          meetTabId = index
         }
-      };
-    });
-  });
-};
+      }
+    })
+  })
+}
 
 // Inject keypress for toggling mute into appropriate tab
 function sendKeypress(tab) {
   chrome.tabs.query({ url: 'https://meet.google.com/*' }, function (tabs) {
-    if (x != -1) {
+    if (meetTabId != -1) {
       chrome.scripting.executeScript({
-        target: { tabId: tabs[x].id },
-        files: ['src/sendKeypress.js']
-      });
+        target: { tabId: tabs[meetTabId].id },
+        files: ['src/sendKeypress.js'],
+      })
     }
-  });
+  })
 }
 
 // Research meet is active and mute status
 function researchTab(tab) {
   chrome.tabs.query({ url: 'https://meet.google.com/*' }, function (tabs) {
-    if (count == 1) {
+    if (meetCount == 1) {
       chrome.scripting.executeScript(
         {
-          target: { tabId: tabs[x].id },
+          target: { tabId: tabs[meetTabId].id },
           func: checkMute,
         },
         updateIcon,
-      );
-    };
-  });
-};
+      )
+    }
+  })
+}
 
 function checkMute() {
   let muted = false
@@ -134,42 +131,42 @@ function checkMute() {
 
 // Functions to run when icon is clicked.
 chrome.action.onClicked.addListener(function (tab) {
-  assessTabs();
-  sendKeypress();
-  researchTab();
-});
+  assessTabs()
+  sendKeypress()
+  researchTab()
+})
 
 // When a meet.google.com/* window is opened (or closed) run functions
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.status == 'complete' || changeInfo.discarded) {
-    assessTabs(tab);
-    researchTab(tab);
+    assessTabs(tab)
+    researchTab(tab)
   }
-});
+})
 
 // Run functions when alarm goes off
 chrome.alarms.onAlarm.addListener(function (alarm) {
   if (alarm.name === '1min') {
-    assessTabs();
-    researchTab();
+    assessTabs()
+    researchTab()
   }
-});
+})
 
 // Run functions on load
-assessTabs();
-researchTab();
+assessTabs()
+researchTab()
 
 // Reset icon and badge on onload / cleanup in case of crash
 addEventListener('beforeunload', () => {
-  chrome.action.setIcon({ path: ICON_GRAY128 });
-  chrome.action.setBadgeText({ text: '' });
+  chrome.action.setIcon({ path: ICON_GRAY128 })
+  chrome.action.setBadgeText({ text: '' })
 })
 
 // ショートカットキー入力時の処理
 chrome.commands.onCommand.addListener((command) => {
   if (command === 'toggle-mute') {
-    assessTabs();
-    sendKeypress();
-    researchTab();
+    assessTabs()
+    sendKeypress()
+    researchTab()
   }
 })
