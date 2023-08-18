@@ -1,28 +1,33 @@
 {
- "manifest_version": 3,
- "name": "Google Meet Mute Toggler",
- "description": "For muting and unmuting Google Meet from the extension icon.",
- "version": "0.3",
- "author": "Jason Ketola",
- "icons": {
- 	"16": "icons/M_gray16.png",
- 	"48": "icons/M_gray48.png",
- 	"128": "icons/M_gray128.png"
- 	},
-
- "background": {
-  "service_worker": "src/background.js",
-  "type": "module"
- },
-
+  "manifest_version": 3,
+  "name": "Google Meet Mute Toggler",
+  "description": "For muting and unmuting Google Meet from the extension icon.",
+  "version": "0.3",
+  "author": "Jason Ketola",
+  "icons": {
+    "16": "icons/M_gray16.png",
+    "48": "icons/M_gray48.png",
+    "128": "icons/M_gray128.png"
+  },
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
   "action": {
     "default_title": "Toggle",
     "default_icon": "icons/M_gray128.png"
   },
- "permissions": ["tabs", "alarms", "scripting", "notifications"],
- "host_permissions": ["https://meet.google.com/"],
- "commands": {
-  "toggle-mute": {
+  "permissions": [
+    "tabs",
+    "alarms",
+    "scripting",
+    "notifications"
+  ],
+  "host_permissions": [
+    "https://meet.google.com/"
+  ],
+  "commands": {
+    "toggle-mute": {
       "suggested_key": {
         "default": "Ctrl+Shift+A"
       },
