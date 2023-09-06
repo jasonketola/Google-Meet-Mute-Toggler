@@ -126,6 +126,8 @@ function checkMute() {
     if ((elem.innerHTML.indexOf('Join now') != -1) || (elem.innerHTML.indexOf('Rejoin') != -1)) {
       joined_status = false
     } else if (elem.matches('[aria-label~="microphone"]') && ['DIV', 'BUTTON'].includes(elem.nodeName)) {
+      // FIXME: 想定外の要素まで取れているためisMutedが取れなかったらスキップする
+      if (elem.dataset?.isMuted === undefined) continue
       muted = JSON.parse(elem.dataset?.isMuted)
     }
   }
