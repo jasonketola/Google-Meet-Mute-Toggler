@@ -1,3 +1,6 @@
+const MEET_URL = 'https://meet.google.com/'
+const MEET_URL_AST = 'https://meet.google.com/*'
+
 const ICON_GRAY48 = chrome.runtime.getURL('icons/M_gray48.png')
 const ICON_GRAY128 = chrome.runtime.getURL('icons/M_gray128.png')
 const ICON_RED128 = chrome.runtime.getURL('icons/M_red128.png')
@@ -25,7 +28,7 @@ let meetCount = 0 // Number of meet.google.com/xxx-xxxx-xxx windows open
 
 // Checks which tabs are open, which should be interacted with, and alerts if too many meets are open
 function assessTabs(tab) {
-  chrome.tabs.query({ url: 'https://meet.google.com/*' }, function (tabs) {
+  chrome.tabs.query({ url: MEET_URL_AST }, function (tabs) {
 
     // Reset global variable values
     isOpen = false
@@ -34,7 +37,7 @@ function assessTabs(tab) {
 
     // Checks if meet.google.com is open and how many xxx-xxxx-xxx meets
     tabs.forEach(function (item, index) {
-      if (item.url == 'https://meet.google.com/') {
+      if (item.url == MEET_URL) {
         isOpen = true
       } else {
         meetCount++
@@ -91,7 +94,7 @@ function assessTabs(tab) {
 
 // Inject keypress for toggling mute into appropriate tab
 function sendKeypress(tab) {
-  chrome.tabs.query({ url: 'https://meet.google.com/*' }, function (tabs) {
+  chrome.tabs.query({ url: MEET_URL_AST }, function (tabs) {
     if (meetTabId != -1) {
       chrome.scripting.executeScript({
         target: { tabId: tabs[meetTabId].id },
@@ -103,7 +106,7 @@ function sendKeypress(tab) {
 
 // Research meet is active and mute status
 function researchTab(tab) {
-  chrome.tabs.query({ url: 'https://meet.google.com/*' }, function (tabs) {
+  chrome.tabs.query({ url: MEET_URL_AST }, function (tabs) {
     if (meetCount == 1) {
       chrome.scripting.executeScript(
         {
