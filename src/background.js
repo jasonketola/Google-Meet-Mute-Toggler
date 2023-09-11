@@ -14,7 +14,7 @@ function updateIcon(statuses) {
   // Set icon to gray if not in an active Meet
   // Set icon to red if in an active Meet and muted
   // Otherwise set icon to green, meaning unmuted in an active meet
-  const icon = (!joined_status) ? ICON_GRAY128 : (muted) ? ICON_GREEN128 : ICON_RED128
+  const icon = (!joined_status) ? ICON_GRAY128 : (muted) ? ICON_RED128 : ICON_GREEN128
   chrome.action.setIcon({ path: icon })
 }
 
@@ -138,7 +138,7 @@ function checkMute() {
 chrome.action.onClicked.addListener(function (tab) {
   assessTabs()
   sendKeypress()
-  researchTab()
+  setTimeout(researchTab, 50)
 })
 
 // When a meet.google.com/* window is opened (or closed) run functions
@@ -172,6 +172,6 @@ chrome.commands.onCommand.addListener((command) => {
   if (command === 'toggle-mute') {
     assessTabs()
     sendKeypress()
-    researchTab()
+    setTimeout(researchTab, 50)
   }
 })
