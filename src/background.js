@@ -49,9 +49,10 @@ function assessTabs(tab) {
 
     // If xxx-xxxx-xxx meets are open set alarm, so that they can be monitored
     if (meetCount > 0) {
+      // https://developer.chrome.com/docs/extensions/reference/alarms/#method-create
+      // To help you debug your app or extension, when you've loaded it unpacked, there's no limit to how often the alarm can fire.
       chrome.alarms.create('1min', {
-        delayInMinutes: 1,
-        periodInMinutes: 1,
+        periodInMinutes: 0.05,
       })
     }
 
