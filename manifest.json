@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Google Meet Mute Toggler",
-  "description": "For muting and unmuting Google Meet from the extension icon.",
+  "name": "Web Meeting Mute Toggler",
+  "description": "For muting and unmuting web meeting from the extension icon.",
   "version": "0.5.0",
   "author": "Jason Ketola",
   "icons": {
