@@ -24,7 +24,8 @@
     "notifications"
   ],
   "host_permissions": [
-    "https://meet.google.com/"
+    "https://meet.google.com/",
+    "https://teams.microsoft.com/"
   ],
   "commands": {
     "toggle-mute": {
