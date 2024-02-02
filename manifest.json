@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Web Meeting Mute Toggler",
   "description": "For muting and unmuting web meeting from the extension icon.",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "author": "Jason Ketola",
   "icons": {
     "16": "icons/M_gray16.png",
