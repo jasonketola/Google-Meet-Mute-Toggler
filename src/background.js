@@ -1,8 +1,8 @@
 const MEET_URL = 'https://meet.google.com/'
 const MEET_URL_AST = 'https://meet.google.com/*'
 
-const TEAMS_URL = 'https://teams.microsoft.com/v2/?meetingjoin=true#/l/meetup-join/'
-const TEAMS_URL_AST = 'https://teams.microsoft.com/v2/?meetingjoin=true#/l/meetup-join/*'
+const TEAMS_URL = 'https://teams.microsoft.com/v2/'
+const TEAMS_URL_AST = 'https://teams.microsoft.com/v2/*'
 
 const ICON_GRAY48 = chrome.runtime.getURL('icons/M_gray48.png')
 const ICON_GRAY128 = chrome.runtime.getURL('icons/M_gray128.png')
