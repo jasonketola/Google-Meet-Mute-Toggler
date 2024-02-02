@@ -10,4 +10,4 @@ For muting and unmuting web meeting from the extension icon in the Chrome browse
 
 **Currently Supported Services**
 * Google Meet
-* Microsoft Teams(midway)
+* Microsoft Teams
