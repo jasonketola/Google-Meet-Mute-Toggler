@@ -106,18 +106,12 @@ const checkMuteMeet = () => {
   return [muted, joined_status]
 }
 
-// FIXME: マイクアイコンのチェックがMeetの設定のままのため、正常に動かない
 const checkMuteTeams = () => {
   let muted = false
   let joined_status = true
-  for (let elem of document.getElementsByTagName('*')) {
-    if ((elem.innerHTML.indexOf('Join now') != -1) || (elem.innerHTML.indexOf('Rejoin') != -1)) {
-      joined_status = false
-    } else if (elem.matches('[aria-label~="microphone"]') && ['DIV', 'BUTTON'].includes(elem.nodeName)) {
-      if (elem.dataset?.isMuted === undefined) continue
-      muted = JSON.parse(elem.dataset?.isMuted)
-    }
-  }
+  const microphoneButton = document.getElementById('microphone-button')
+  // TODO: もう少しいい要素があるはず
+  muted = microphoneButton.dataset.trackModuleNameNew == 'unMute'
   return [muted, joined_status]
 }
 
