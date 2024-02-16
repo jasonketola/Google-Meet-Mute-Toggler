@@ -1,6 +1,6 @@
 {
   "name": "web-meeting-mute-toggler",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "For muting and unmuting web meeting from the extension icon.",
   "main": "src/content.ts",
   "scripts": {
