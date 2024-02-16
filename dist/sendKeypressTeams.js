@@ -1,0 +1,1 @@
+{let e="other";navigator.userAgent.indexOf("Mac")!=-1&&(e="MacOS"),e=="MacOS"?document.dispatchEvent(new KeyboardEvent("keydown",{bubbles:!0,cancelable:!0,metaKey:!0,shiftKey:!0,keyCode:77,code:"KeyM"})):document.dispatchEvent(new KeyboardEvent("keydown",{bubbles:!0,cancelable:!0,ctrlKey:!0,shiftKey:!0,keyCode:77,code:"KeyM"}))}

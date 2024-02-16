@@ -10,7 +10,7 @@
     "128": "icons/M_gray128.png"
   },
   "background": {
-    "service_worker": "src/background.js",
+    "service_worker": "dist/background.js",
     "type": "module"
   },
   "action": {

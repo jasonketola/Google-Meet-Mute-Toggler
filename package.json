@@ -1,0 +1,19 @@
+{
+  "name": "web-meeting-mute-toggler",
+  "version": "0.5.1",
+  "description": "For muting and unmuting web meeting from the extension icon.",
+  "main": "src/content.ts",
+  "scripts": {
+    "build": "tsc && vite build"
+  },
+  "keywords": [],
+  "author": "Kai Shoya <shonari77@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chrome": "^0.0.260",
+    "install": "^0.13.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.3"
+  },
+  "packageManager": "pnpm@8.15.3+sha256.fc4a49bd609550a41e14d20efbce802a4b892aa4cac877322de2f0924f122991"
+}
